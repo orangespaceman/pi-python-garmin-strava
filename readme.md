@@ -142,13 +142,13 @@ pi$ df -h
 
 ```
 
-You should see it listed as 
+You should see it listed as
 
 ```
 /media/usb0
 ```
 
-There are other ways to mount the watch as a USB drive. I tried the following, but couldn't reliably get it to mount every time it was plugged in: 
+There are other ways to mount the watch as a USB drive. I tried the following, but couldn't reliably get it to mount every time it was plugged in:
 
  - [http://www.raspberrypi-spy.co.uk/2014/05/how-to-mount-a-usb-flash-disk-on-the-raspberry-pi/](http://www.raspberrypi-spy.co.uk/2014/05/how-to-mount-a-usb-flash-disk-on-the-raspberry-pi/)
  - [http://www.axllent.org/docs/view/auto-mounting-usb-storage/](http://www.axllent.org/docs/view/auto-mounting-usb-storage/)
@@ -187,7 +187,7 @@ Sign up for a free [Strava](http://strava.com/) account
 
 Create a new [Strava application](https://www.strava.com/developers)
 
-Retrieve your API keys. 
+Retrieve your API keys.
 
 Duplicate the `config.sample.py` file in the repo as `config.py`
 
@@ -202,19 +202,24 @@ Don't edit it yet, first we need to create a new Strava `access_token` that has 
 
 By default the API key that you generate with Strava is read-only, so we can read information but not upload any activities. In order to generate this we need to give extra permissions to our application.
 
-If you have PHP installed on your host machine, you can host the API generator in the `api-key-generator` directory. 
+If you have PHP installed on your host machine, you can host the API generator in the `api-key-generator` directory.
 
 If not, you can install PHP on the Pi:
 
 ```
-pi$ sudo apt-get install php5
+pi$ sudo apt-get install php5 php5-curl
 ```
 
 When this has finished installing, you'll need to restart the Pi to use it.
 
-Duplicate the config.sample.php file as config.php and fill in client ID and client secret, from your Strava Application settings page.
+Duplicate the `config.sample.php` file as `config.php` and fill in client ID and client secret, from your Strava Application settings page.
 
-Once you have PHP installed, run this at:
+
+```
+pi$ cp config.sample.php config.php
+```
+
+Once you have PHP installed, run this with:
 
 ```
 pi$ php -S 0.0.0.0:8000 -t api-key-generator/
@@ -230,11 +235,11 @@ Click the link, authorise the app, and make a note of the *access_token*, copy i
 
 The Pi should now upload your new activities whenever you plug in your watch.
 
-To view progress logs, you can look in the `logs` subdirectory, or leave a server running to view them through a browser: 
+To view progress logs, you can look in the `logs` subdirectory, or leave a server running to view them through a browser:
 
 ```
 pi$ php -S 0.0.0.0:8000 -t log-viewer/
-``` 
+```
 
 ***
 
