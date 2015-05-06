@@ -61,7 +61,7 @@ class Uploader:
         if os.path.isdir(self.src_path):
             for fn in os.listdir(self.src_path):
                 if os.path.isfile(self.src_path + fn):
-                    logging.debug("file already uploaded: {0}".format(fn))
+                    logging.debug("checking file: {0}".format(fn))
 
                     # check for any new files
                     if os.path.exists(self.dest_path + fn):
