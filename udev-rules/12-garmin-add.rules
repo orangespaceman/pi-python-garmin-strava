@@ -1,0 +1,2 @@
+# udev rule to trigger python script on usb insertion
+ACTION=="add", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="091e", ATTRS{idProduct}=="25ca", RUN+="/home/pi/pi-python-garmin-strava/bash/on-garmin-add-trigger.sh"

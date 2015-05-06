@@ -1,0 +1,2 @@
+# deploy to pi - if we're not using git
+rsync ./ pi@pi:~/pi-python-garmin-strava/ --progress --exclude=.DS_Store --exclude=.git --exclude=env --rsh=ssh --recursive --verbose --delete --delete-excluded --links #--dry-run
