@@ -8,5 +8,5 @@ DIRPATH=$1;
 
 # go
 source $DIRPATH/env/bin/activate
-$DIRPATH/upload.py $DIRPATH
+$DIRPATH/env/bin/python $DIRPATH/upload.py $DIRPATH
 deactivate
