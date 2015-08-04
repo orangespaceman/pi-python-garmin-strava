@@ -4,6 +4,20 @@
         $log = basename($_GET['log']);
         $log = preg_replace('/[^-a-zA-Z0-9_]/', '', $log);
         $data = file_get_contents(sprintf('%s/%s.log', $logdir, $log));
+    } else {
+        $files = array();
+        if ($handle = opendir($logdir)) {
+            while (false !== ($entry = readdir($handle))) {
+                if ($entry[0] !== '.') {
+                    $filename = basename($entry, '.log');
+                    $files[] = '
+                    <li><a href="./?log='.$filename.'">'.$filename.'</a></li>
+                    ';
+                }
+            }
+            closedir($handle);
+        }
+        sort($files);
     }
 ?>
 <!DOCTYPE html>
@@ -28,20 +42,8 @@
 
     <?php
 
-    if ($handle = opendir($logdir)) {
-
-        while (false !== ($entry = readdir($handle))) {
-
-            if ($entry[0] !== '.') {
-                $filename = basename($entry, '.log');
-                echo '
-                <li><a href="./?log='.$filename.'">'.$filename.'</a></li>
-                ';
-            }
-
-        }
-
-        closedir($handle);
+    foreach($files as $file) {
+        echo $file;
     }
 
     ?>
