@@ -6,5 +6,8 @@
 # set script directory
 DIRPATH='/home/pi/pi-python-garmin-strava'
 
+touch $DIRPATH/logs/bash.txt
+chmod 777 $DIRPATH/logs/bash.txt
+
 # go
-$DIRPATH/bash/on-garmin-add.sh $DIRPATH & exit
+echo $DIRPATH/bash/on-garmin-add.sh | at now

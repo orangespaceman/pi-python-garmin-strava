@@ -4,7 +4,7 @@
 
 ***Automatically upload activities from a Garmin GPS watch to Strava when it is plugged into a Raspberry Pi.***
 
-I have tested this with my Garmin Forerunner 10, I have no idea if it will work with any others.
+I have tested this with my Garmin Forerunner 10 and a Garmin Vivoactive, I have no idea if it will work with any others.
 
 ***
 
@@ -18,47 +18,14 @@ To set this repo up, you need to do the following:
 
 ***
 
-In the following examples, for a simple differentiation between the command line of your own computer and the Pi command line, the following prefix will be used to denote the Pi's command line:
-
-```
-pi$
-```
-
-And this will be used for your host computer:
-
-```
-host$
-```
-
-
 ## Raspberry Pi
 
 Set up a Raspberry Pi with a network connection. I followed [these instructions](https://www.raspberrypi.org/help/noobs-setup/).
 
-If you want to control the Raspberry Pi remotely from your own computer, you can try connecting to the Pi via `ssh` using its hostname `raspberrypi`, the username `pi` and the password `raspberry`:
+Once the Raspberry Pi is running, you may need to install `git` on it so that you can easily clone this git repo:
 
 ```
-host$ ssh pi@raspberrypi
-```
-
-If you can't connect remotely, log into the Pi directly and make a note of its IP address.
-
-```
-pi$ hostname -I
-```
-
-Then you should be able to `ssh` remotely into the pi:
-
-```
-host$ ssh pi@[IP ADDRESS]
-```
-
-I have [set up my Pi with my SSH key](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md) and a [static IP](http://www.modmypi.com/blog/tutorial-how-to-give-your-raspberry-pi-a-static-ip-address) so that I can access it without having to type in a password each time.
-
-Once the Raspberry Pi is running, you may want to install `git` on it so that you can easily clone this git repo:
-
-```
-pi$ sudo apt-get install git
+$ sudo apt-get install git
 ```
 
 ## Git repo
@@ -73,25 +40,11 @@ If you change any of these, you'll need to go through the scripts and update whe
 
 ***
 
-If you are using Git, clone this repo somewhere on the Pi
+Clone this repo somewhere on the Pi
 
 ```
-pi$ git clone git@github.com:thegingerbloke/pi-python-garmin-strava.git
+$ git clone https://github.com/thegingerbloke/pi-python-garmin-strava.git
 ```
-
-Or if you're just copying it over from your machine to the Pi, in the user's home directory create a new directory called `pi-python-garmin-strava`:
-
-```
-pi$ mkdir pi-python-garmin-strava
-```
-
-And then use the deploy script on your main computer to copy the files over:
-
-```
-host$ ./deploy.sh
-```
-
-The deploy script assumes that you've set up SSH keys. If you haven't, edit the `deploy.sh` file and replace `pi@pi` with `pi@raspberrypi` or `pi@[IPADDRESS]`
 
 Once this is complete, the project files should now be in the `pi` user's `home` directory:
 
@@ -102,7 +55,7 @@ Once this is complete, the project files should now be in the `pi` user's `home`
 We need to allow these scripts to be run by other users:
 
 ```
-pi$ chmod -R 777 /home/pi/pi-python-garmin-strava
+$ chmod -R 777 /home/pi/pi-python-garmin-strava
 ```
 
 ## Script setup
@@ -120,25 +73,31 @@ Bus 001 Device 005: ID 095d:23db Garmin International
 Copy the `udev` *rules* file from the repo into `/etc/udev/rules.d/`
 
 ```
-pi$ sudo cp udev-rules/12-garmin-add.rules /etc/udev/rules.d/
+$ sudo cp udev-rules/12-garmin-add.rules /etc/udev/rules.d/
 ```
 
 Reload `udev` rules:
 
 ```
-pi$ sudo udevadm control --reload-rules
+$ sudo udevadm control --reload-rules
+```
+
+You also need to install `at`
+
+```
+$ sudo apt-get install at
 ```
 
 With this set up, the Pi should now run a python script whenever the Garmin is plugged into a USB socket. But before it works, we need to ensure that the Pi automatically mounts the Garmin every time it's plugged in. To do this, install `usbmount`:
 
 ```
-pi$ sudo apt-get install usbmount
+$ sudo apt-get install usbmount
 ```
 
 To test that the watch is mounted, disconnect and reconnect it, then run:
 
 ```
-pi$ df -h
+$ df -h
 
 ```
 
@@ -159,26 +118,26 @@ There are other ways to mount the watch as a USB drive. I tried the following, b
 Install `pip` and `virtualenv` on the Raspberry Pi
 
 ```
-pi$ sudo apt-get install python-pip
-pi$ sudo pip install virtualenv
+$ sudo apt-get install python-pip
+$ sudo pip install virtualenv
 ```
 
 Create a virtualenv for this repo:
 
 ```
-pi$ virtualenv env
+$ virtualenv env
 ```
 
 Activate the virtualenv:
 
 ```
-pi$ source env/bin/activate
+$ source env/bin/activate
 ```
 
 Install the project requirements:
 
 ```
-pi$ pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 
 ## Strava
@@ -192,7 +151,7 @@ Retrieve your API keys.
 Duplicate the `config.sample.py` file in the repo as `config.py`
 
 ```
-pi$ cp config.sample.py config.py
+$ cp config.sample.py config.py
 ```
 
 Don't edit it yet, first we need to create a new Strava `access_token` that has write-permissions.
@@ -207,7 +166,7 @@ If you have PHP installed on your host machine, you can host the API generator i
 If not, you can install PHP on the Pi:
 
 ```
-pi$ sudo apt-get install php5 php5-curl
+$ sudo apt-get install php5 php5-curl
 ```
 
 When this has finished installing, you'll need to restart the Pi to use it.
@@ -216,13 +175,13 @@ Duplicate the `config.sample.php` file as `config.php` and fill in client ID and
 
 
 ```
-pi$ cp config.sample.php config.php
+$ cp config.sample.php config.php
 ```
 
 Once you have PHP installed, run this with:
 
 ```
-pi$ php -S 0.0.0.0:8000 -t api-key-generator/
+$ php -S 0.0.0.0:8000 -t api-key-generator/
 ```
 
 View this file through the web server so it can be seen at a root domain, e.g. view it at *http://[Pi-IP-Address]:8000/*
@@ -238,7 +197,7 @@ The Pi should now upload your new activities whenever you plug in your watch.
 To view progress logs, you can look in the `logs` subdirectory, or leave a server running to view them through a browser:
 
 ```
-pi$ php -S 0.0.0.0:8000 -t log-viewer/
+$ php -S 0.0.0.0:8000 -t log-viewer/
 ```
 
 ***
