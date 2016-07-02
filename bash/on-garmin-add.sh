@@ -7,21 +7,19 @@ DIRPATH='/home/pi/pi-python-garmin-strava'
 printf "\n----\n" >> $DIRPATH/logs/bash.txt
 echo $(date) >> $DIRPATH/logs/bash.txt
 
-sleep 10
-
 COUNTER=0;
-while [  $COUNTER -lt 5 ]; do
+while [  $COUNTER -lt 10 ]; do
 
-    echo Attempt $COUNTER >> $DIRPATH/logs/bash.txt
+    echo Connection attempt $COUNTER >> $DIRPATH/logs/bash.txt
     let COUNTER=COUNTER+1
 
     if df -h | grep -q "/media/usb0"
     then
-        echo "Found" >> $DIRPATH/logs/bash.txt
+        echo "Device found" >> $DIRPATH/logs/bash.txt
         break
     else
-        echo "Not found" >> $DIRPATH/logs/bash.txt
-        sleep 10
+        echo "Device not found" >> $DIRPATH/logs/bash.txt
+        sleep 5
     fi
 done
 
@@ -30,4 +28,5 @@ source $DIRPATH/env/bin/activate
 $DIRPATH/env/bin/python $DIRPATH/upload.py $DIRPATH
 deactivate
 
+echo Complete >> $DIRPATH/logs/bash.txt
 printf "\n----\n" >> $DIRPATH/logs/bash.txt
