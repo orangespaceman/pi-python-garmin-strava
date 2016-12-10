@@ -1,1 +1,1 @@
-stravalib==0.5.0
+stravalib==0.6.4
