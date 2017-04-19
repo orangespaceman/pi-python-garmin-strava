@@ -4,7 +4,7 @@
 
 ***Automatically upload activities from a Garmin GPS watch to Strava when it is plugged into a Raspberry Pi.***
 
-I have tested this with my Garmin Forerunner 10 and a Garmin Vivoactive, I have no idea if it will work with any others.
+I have tested this with a Garmin Forerunner 10, Forerunner 235, a Vivoactive and a Vivoactive HR. I assume it will work with others.
 
 ***
 
@@ -65,10 +65,19 @@ Insert the Garmin watch USB plug into the Pi.
 Run `lsusb` to find the USB device details, e.g.
 
 ```
-Bus 001 Device 005: ID 095d:23db Garmin International
+Bus 001 Device 005: ID 091e:abcd Garmin International
 ```
 
-&mdash; This tells us our vendor ID (e.g. `095d`) and our product ID (e.g. `23db`)
+&mdash; This tells us our vendor ID (e.g. `091e`) and our product ID (e.g. `abcd`)
+
+Edit the `udev` *rules* file, replacing the _product ID_ with the one that matches your watch. Some examples below:
+
+| Device         | Product ID |
+|----------------|------------|
+| Forerunner 10  | 25ca       |
+| Forerunner 235 | 097f       |
+| Vivoactive     | 2773       |
+| Vivoactive HR  | 0921       |
 
 Copy the `udev` *rules* file from the repo into `/etc/udev/rules.d/`
 
