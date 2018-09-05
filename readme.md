@@ -43,7 +43,7 @@ If you change any of these, you'll need to go through the scripts and update whe
 Clone this repo somewhere on the Pi
 
 ```
-$ git clone https://github.com/thegingerbloke/pi-python-garmin-strava.git
+$ git clone https://github.com/orangespaceman/pi-python-garmin-strava.git
 ```
 
 Once this is complete, the project files should now be in the `pi` user's `home` directory:
