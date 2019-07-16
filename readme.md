@@ -78,6 +78,7 @@ Edit the `udev` *rules* file, replacing the _product ID_ with the one that match
 | Forerunner 235 | 097f       |
 | Vivoactive     | 2773       |
 | Vivoactive HR  | 0921       |
+| Fenix 5s       | 09f0       |
 
 Copy the `udev` *rules* file from the repo into `/etc/udev/rules.d/`
 
