@@ -1,8 +1,12 @@
 # Pi Python Garmin Strava
 
+***This may no longer work since Strava removed 'forever' access tokens in October 2019***
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 ***
 
-***Automatically upload activities from a Garmin GPS watch to Strava when it is plugged into a Raspberry Pi.***
+*Automatically upload activities from a Garmin GPS watch to Strava when it is plugged into a Raspberry Pi.*
 
 I have tested this with a Garmin Forerunner 10, Forerunner 235, a Vivoactive and a Vivoactive HR. I assume it will work with others.
 
@@ -217,3 +221,19 @@ $ php -S 0.0.0.0:8000 -t log-viewer/
  - Flash a light or beep when a new file has been updated (e.g. three beeps indicates three new files have been uploaded)
  - Add a Flask web server to allow easy viewing of logs through a web browser
  - Generate the Strava API key via a simple Flask app - remove PHP dependency
+
+***
+
+ DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE 
+                    Version 2, December 2004 
+
+ Copyright (C) 2004 Sam Hocevar <sam@hocevar.net> 
+
+ Everyone is permitted to copy and distribute verbatim or modified 
+ copies of this license document, and changing it is allowed as long 
+ as the name is changed. 
+
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE 
+   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION 
+
+  0. You just DO WHAT THE FUCK YOU WANT TO.
